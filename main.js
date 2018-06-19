@@ -30,12 +30,11 @@ function draw() {
                 stroke(0);
                 fill(0);
             } else {
-                stroke(255);
+                stroke(0);
                 fill(255);
             }
             
             rect(x * size, y * size, size-1, size-1);
-            
         }
     }
 }
