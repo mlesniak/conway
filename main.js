@@ -1,5 +1,3 @@
-// TODO ML Whole window
-// TODO ML No grid if size < 4
 // TODO ML Optimize createGrid()
 
 let size = 10;
@@ -12,7 +10,6 @@ let grid = undefined;
 function setup() {
     let w = floor(innerWidth / size) * size + size;
     let h = floor(innerHeight / size) * size + size;
-    console.log(w, h);
 
     let c = createCanvas(w, h);
     c.style('display', 'block');
@@ -39,7 +36,7 @@ function drawGrid() {
     for (let x = 0; x < cols; x++) {
         for (let y = 0; y < rows; y++) {
             if (grid[x][y] == 1) {
-                stroke(127);
+                stroke(200);
                 fill(0);
             } else {
                 if (size < 10) {
