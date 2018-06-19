@@ -29,16 +29,7 @@ function setup() {
     }
 }
 
-let c = 0;
-let i = 0;
 function draw() {
-    if (c == 1) {
-        return;
-    }
-    // if (i++ % 60 != 0) {
-    //     return;
-    // }
-
     drawGrid();
     grid = updateGrid(grid);
 }
@@ -94,13 +85,6 @@ function countNeighbours(grid, x, y) {
             }
             // Wrap around.
             sum += grid[(x + i + cols) % cols][(y + j + rows) % rows];
-            if (c == 0 && isNaN(sum)) {
-                // 0 0 1 0 1
-                console.log(x, y, i, j, (x + i + cols) % cols);
-                //console.table(grid);
-                window.g = grid;
-                c = 1;
-            }
         }
     }
 
