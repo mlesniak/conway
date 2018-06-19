@@ -1,4 +1,8 @@
-let size = 40;
+// TODO ML Whole window
+// TODO ML No grid if size < 4
+// TODO ML Optimize createGrid()
+
+let size = 10;
 let cols;
 let rows;
 
@@ -9,11 +13,7 @@ function setup() {
     cols = width / size;
     rows = height / size;
 
-    grid = new Array(cols);
-    for (let x = 0; x < cols; x++) {
-        grid[x] = new Array(rows);
-    }
-
+    grid = createGrid(cols, rows);
     for (let x = 0; x < cols; x++) {
         for (let y = 0; y < cols; y++) {
             grid[x][y] = floor(random(2));
@@ -21,8 +21,21 @@ function setup() {
     }
 }
 
-
+let c = 0;
+let i = 0;
 function draw() {
+    if (c == 1) {
+        return;
+    }
+    // if (i++ % 60 != 0) {
+    //     return;
+    // }
+
+    drawGrid();
+    grid = updateGrid(grid);
+}
+
+function drawGrid() {
     background(0);
     for (let x = 0; x < cols; x++) {
         for (let y = 0; y < rows; y++) {
@@ -33,8 +46,70 @@ function draw() {
                 stroke(0);
                 fill(255);
             }
-            
-            rect(x * size, y * size, size-1, size-1);
+            rect(x * size, y * size, size - 1, size - 1);
         }
     }
 }
+
+function updateGrid(grid) {
+    let ng = createGrid(cols, rows);
+
+    for (let x = 0; x < cols; x++) {
+        for (let y = 0; y < rows; y++) {
+            let n = countNeighbours(grid, x, y);
+            if (grid[x][y] == 0 && n == 3) {
+                ng[x][y] = 1;
+            }
+            if (grid[x][y] == 1 && n < 2) {
+                ng[x][y] = 0;
+            }
+            if (grid[x][y] == 1 && (n == 2 || n == 3)) {
+                ng[x][y] = 1;
+            }
+            if (grid[x][y] == 1 && n > 3) {
+                ng[x][y] = 0;
+            }
+        }
+    }
+
+    return ng;
+}
+
+function countNeighbours(grid, x, y) {
+    let sum = 0;
+    for (let i = -1; i < 2; i++) {
+        for (let j = -1; j < 2; j++) {
+            if (i == 0 && j == 0) {
+                continue;
+            }
+            // Wrap around.
+            sum += grid[(x + i + cols) % cols][(y + j + rows) % rows];
+            if (c == 0 && isNaN(sum)) {
+                // 0 0 1 0 1
+                console.log(x, y, i, j, (x + i + cols) % cols);
+                //console.table(grid);
+                window.g = grid;
+                c = 1;
+            }
+        }
+    }
+
+    return sum;
+}
+
+
+function createGrid(cols, rows) {
+    let g = new Array(cols);
+    for (let x = 0; x < cols; x++) {
+        g[x] = new Array(rows);
+    }
+
+    for (let x = 0; x < cols; x++) {
+        for (let y = 0; y < cols; y++) {
+            g[x][y] = 0;
+        }
+    }
+
+    return g;
+}
+
