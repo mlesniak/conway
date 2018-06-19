@@ -3,19 +3,27 @@
 // TODO ML Optimize createGrid()
 
 let size = 10;
+
 let cols;
 let rows;
 
 let grid = undefined;
 
 function setup() {
-    createCanvas(400, 400);
-    cols = width / size;
-    rows = height / size;
+    let w = floor(innerWidth / size) * size + size;
+    let h = floor(innerHeight / size) * size + size;
+    console.log(w, h);
+
+    let c = createCanvas(w, h);
+    c.style('display', 'block');
+    c.style('margin-left', '-8px');
+    c.style('margin-top', '-8px');
+    cols = floor(width / size);
+    rows = floor(height / size);
 
     grid = createGrid(cols, rows);
     for (let x = 0; x < cols; x++) {
-        for (let y = 0; y < cols; y++) {
+        for (let y = 0; y < rows; y++) {
             grid[x][y] = floor(random(2));
         }
     }
@@ -36,14 +44,16 @@ function draw() {
 }
 
 function drawGrid() {
-    background(0);
+    background(255);
     for (let x = 0; x < cols; x++) {
         for (let y = 0; y < rows; y++) {
             if (grid[x][y] == 1) {
-                stroke(0);
+                stroke(127);
                 fill(0);
             } else {
-                stroke(0);
+                if (size < 10) {
+                    noStroke();
+                }
                 fill(255);
             }
             rect(x * size, y * size, size - 1, size - 1);
@@ -105,7 +115,7 @@ function createGrid(cols, rows) {
     }
 
     for (let x = 0; x < cols; x++) {
-        for (let y = 0; y < cols; y++) {
+        for (let y = 0; y < rows; y++) {
             g[x][y] = 0;
         }
     }
