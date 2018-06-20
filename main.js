@@ -10,14 +10,14 @@ let grid = undefined;
 function setup() {
     let w = floor(innerWidth / size) * size + size;
     let h = floor(innerHeight / size) * size + size;
-
+    
     let c = createCanvas(w, h);
     c.style('display', 'block');
     c.style('margin-left', '-8px');
     c.style('margin-top', '-8px');
     cols = floor(width / size);
     rows = floor(height / size);
-
+    
     grid = createGrid(cols, rows);
     for (let x = 0; x < cols; x++) {
         for (let y = 0; y < rows; y++) {
@@ -28,7 +28,9 @@ function setup() {
 
 function draw() {
     drawGrid();
-    grid = updateGrid(grid);
+    if (!mouseIsPressed) {
+        grid = updateGrid(grid);
+    }
 }
 
 function drawGrid() {
@@ -51,7 +53,7 @@ function drawGrid() {
 
 function updateGrid(grid) {
     let ng = createGrid(cols, rows);
-
+    
     for (let x = 0; x < cols; x++) {
         for (let y = 0; y < rows; y++) {
             let n = countNeighbours(grid, x, y);
@@ -69,8 +71,12 @@ function updateGrid(grid) {
             }
         }
     }
-
+    
     return ng;
+}
+
+function mouseDragged() {
+    grid[floor(mouseX / size)][floor(mouseY / size)] = 1;
 }
 
 function countNeighbours(grid, x, y) {
@@ -84,7 +90,7 @@ function countNeighbours(grid, x, y) {
             sum += grid[(x + i + cols) % cols][(y + j + rows) % rows];
         }
     }
-
+    
     return sum;
 }
 
@@ -94,13 +100,13 @@ function createGrid(cols, rows) {
     for (let x = 0; x < cols; x++) {
         g[x] = new Array(rows);
     }
-
+    
     for (let x = 0; x < cols; x++) {
         for (let y = 0; y < rows; y++) {
             g[x][y] = 0;
         }
     }
-
+    
     return g;
 }
 
