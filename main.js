@@ -1,5 +1,6 @@
 // TODO ML Optimize createGrid()
 
+let fs = false;
 let size = 10;
 
 let cols;
@@ -8,15 +9,12 @@ let rows;
 let grid = undefined;
 
 function setup() {
-    let w = floor(innerWidth / size) * size + size;
-    let h = floor(innerHeight / size) * size + size;
-    
-    let c = createCanvas(w, h);
+    let c = createCanvas(windowWidth, windowHeight);
     c.style('display', 'block');
     c.style('margin-left', '-8px');
     c.style('margin-top', '-8px');
-    cols = floor(width / size);
-    rows = floor(height / size);
+    cols = floor(windowWidth / size);
+    rows = floor(windowHeight / size);
     
     grid = createGrid(cols, rows);
     for (let x = 0; x < cols; x++) {
@@ -108,5 +106,22 @@ function createGrid(cols, rows) {
     }
     
     return g;
+}
+
+/**
+ * Fullscreen handling.
+ */
+function keyPressed() {
+    if (key === 'F') {
+        fs = !fs;
+        fullscreen(fs);
+        setup();
+    }
+}
+
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+    setup();
 }
 
