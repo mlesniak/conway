@@ -117,6 +117,10 @@ function keyPressed() {
         fullscreen(fs);
         setup();
     }
+
+    if (key === 'R') {
+        setup();
+    }
 }
 
 
