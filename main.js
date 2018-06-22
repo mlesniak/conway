@@ -29,7 +29,8 @@ function setup() {
 function draw() {
     drawGrid();
     fill(255, 0, 0);
-    text(index, 0, 10);
+    // For debugging index.
+    // text(index, 0, 10);
     if (!mouseIsPressed) {
         updateGrid();
     }
@@ -38,17 +39,17 @@ function draw() {
 
 function drawGrid() {
     let currentGrid = grids[index % 2];
-    background(255);
+    background(0);
     for (let x = 0; x < cols; x++) {
         for (let y = 0; y < rows; y++) {
             if (currentGrid[x][y] == 1) {
-                stroke(200);
-                fill(0);
+                stroke(0);
+                fill(0, 200, 0);
             } else {
                 if (size < 10) {
                     noStroke();
                 }
-                fill(255);
+                fill(0);
             }
             rect(x * size, y * size, size - 1, size - 1);
         }
