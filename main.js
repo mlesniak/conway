@@ -142,10 +142,10 @@ function keyPressed() {
     }
 
     if (key === 'J') {
-        size -= 2;
-        if (size < 2) {
-            size = 2;
+        if (size == 4) {
+            return;
         }
+        size -= 2;
         setup();
     }
 }
