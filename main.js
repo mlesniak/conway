@@ -134,6 +134,20 @@ function keyPressed() {
     if (key === 'R') {
         setup();
     }
+
+    console.log(key);
+    if (key === 'K') {
+        size += 2;
+        setup();
+    }
+
+    if (key === 'J') {
+        size -= 2;
+        if (size < 2) {
+            size = 2;
+        }
+        setup();
+    }
 }
 
 
